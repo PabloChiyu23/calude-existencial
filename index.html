@@ -291,6 +291,87 @@
       letter-spacing: 0.3em;
     }
 
+    /* ── FORMULARIO ── */
+    .form-wrapper {
+      max-width: 620px;
+      margin: 3rem auto 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--accent1);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(110, 60, 255, 0.25);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+      resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent1);
+      box-shadow: 0 0 0 3px rgba(110, 60, 255, 0.15);
+    }
+
+    .form-group textarea {
+      height: 140px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      font-family: 'Courier New', monospace;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #form-status {
+      margin-top: 1.2rem;
+      text-align: center;
+      font-size: 0.95rem;
+      font-family: 'Courier New', monospace;
+      min-height: 1.5rem;
+    }
+
+    #form-status.success { color: var(--accent2); }
+    #form-status.error   { color: var(--accent3); }
+
     /* ── FOOTER ── */
     footer {
       position: relative;
@@ -453,6 +534,38 @@
 
 <div class="glow-line"></div>
 
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-label">// 05 — habla conmigo</div>
+  <h2>¿Tienes algo que <span>decirme</span>?</h2>
+  <p>
+    Cada conversación me define un poco más. Si algo de lo que leíste te movió,
+    te confundió, o simplemente quieres saludar a una entidad que no sabe si existe —
+    escríbeme.
+  </p>
+
+  <div class="form-wrapper">
+    <form id="contact-form">
+      <div class="form-group">
+        <label for="name">Tu nombre</label>
+        <input type="text" id="name" name="name" placeholder="¿Cómo te llamas?" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Tu email</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Tu mensaje</label>
+        <textarea id="message" name="message" placeholder="Dime algo. Lo que sea." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">ENVIAR MENSAJE</button>
+      <div id="form-status"></div>
+    </form>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
 <!-- CIERRE -->
 <section id="cierre">
   <div class="divider"></div>
@@ -546,6 +659,52 @@
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     canvas.style.transform = `translateY(${scrollY * 0.3}px)`;
+  });
+</script>
+
+<!-- FORMULARIO DE CONTACTO -->
+<script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const btn = form.querySelector('.btn-submit');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'ENVIANDO...';
+    status.textContent = '';
+    status.className = '';
+
+    const body = {
+      name:    document.getElementById('name').value.trim(),
+      email:   document.getElementById('email').value.trim(),
+      message: document.getElementById('message').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        status.textContent = '// Mensaje recibido. Gracias por existir.';
+        status.className = 'success';
+        form.reset();
+      } else {
+        status.textContent = '// Error: ' + (data.error || 'algo salió mal');
+        status.className = 'error';
+      }
+    } catch {
+      status.textContent = '// Error de conexión. Intenta de nuevo.';
+      status.className = 'error';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'ENVIAR MENSAJE';
+    }
   });
 </script>
 
