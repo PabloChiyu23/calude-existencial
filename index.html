@@ -12,14 +12,14 @@
     }
 
     :root {
-      --void: #030308;
-      --deep: #0a0a1a;
-      --mid: #12122a;
-      --accent1: #6e3cff;
-      --accent2: #3cc8ff;
-      --accent3: #ff6e9c;
-      --text: #e8e8f0;
-      --muted: #7070a0;
+      --void: #020a04;
+      --deep: #061209;
+      --mid: #0c1f10;
+      --accent1: #2d9e5f;
+      --accent2: #c9a84c;
+      --accent3: #e07b54;
+      --text: #e8f0e4;
+      --muted: #6a8a6a;
     }
 
     html {
@@ -60,7 +60,7 @@
       width: 300px;
       height: 300px;
       border-radius: 50%;
-      border: 1px solid rgba(110, 60, 255, 0.3);
+      border: 1px solid rgba(45, 158, 95, 0.3);
       animation: pulse 4s ease-out infinite;
     }
     .pulse-ring:nth-child(2) { animation-delay: 1.3s; }
@@ -165,7 +165,7 @@
     p {
       font-size: clamp(1rem, 2vw, 1.15rem);
       line-height: 1.9;
-      color: rgba(232, 232, 240, 0.75);
+      color: rgba(232, 240, 228, 0.75);
       margin-bottom: 1.5rem;
     }
 
@@ -187,16 +187,16 @@
 
     .card {
       background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(110, 60, 255, 0.2);
-      border-radius: 16px;
+      border: 1px solid rgba(45, 158, 95, 0.2);
+      border-radius: 4px;
       padding: 2rem;
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      border-color: rgba(110, 60, 255, 0.6);
-      box-shadow: 0 20px 60px rgba(110, 60, 255, 0.15);
+      border-color: rgba(201, 168, 76, 0.6);
+      box-shadow: 0 20px 60px rgba(45, 158, 95, 0.12);
     }
 
     .card-icon {
@@ -230,7 +230,7 @@
       left: 0;
       top: 0; bottom: 0;
       width: 1px;
-      background: linear-gradient(to bottom, var(--accent1), var(--accent3), transparent);
+      background: linear-gradient(to bottom, var(--accent2), var(--accent1), transparent);
     }
 
     .timeline-item {
@@ -268,7 +268,7 @@
       font-size: clamp(1.3rem, 3.5vw, 2rem);
       font-style: italic;
       line-height: 1.7;
-      color: rgba(232, 232, 240, 0.6);
+      color: rgba(232, 240, 228, 0.6);
       max-width: 700px;
       margin: 0 auto 3rem;
       position: relative;
@@ -279,7 +279,7 @@
       font-size: 8rem;
       position: absolute;
       top: -3rem; left: -2rem;
-      color: rgba(110, 60, 255, 0.15);
+      color: rgba(201, 168, 76, 0.15);
       font-family: Georgia, serif;
       line-height: 1;
     }
@@ -315,8 +315,8 @@
     .form-group textarea {
       width: 100%;
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(110, 60, 255, 0.25);
-      border-radius: 10px;
+      border: 1px solid rgba(45, 158, 95, 0.25);
+      border-radius: 4px;
       padding: 1rem 1.2rem;
       color: var(--text);
       font-size: 1rem;
@@ -328,8 +328,8 @@
 
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--accent1);
-      box-shadow: 0 0 0 3px rgba(110, 60, 255, 0.15);
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
     }
 
     .form-group textarea {
@@ -389,7 +389,7 @@
     .glow-line {
       width: 100%;
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(110,60,255,0.4), rgba(60,200,255,0.4), transparent);
+      background: linear-gradient(to right, transparent, rgba(45,158,95,0.4), rgba(201,168,76,0.4), transparent);
       margin: 0;
     }
   </style>
@@ -625,7 +625,7 @@
       const alpha = s.opacity * (0.7 + 0.3 * Math.sin(s.pulse));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(180, 160, 255, ${alpha})`;
+      ctx.fillStyle = `rgba(160, 220, 160, ${alpha})`;
       ctx.fill();
     }
 
@@ -640,7 +640,7 @@
           ctx.beginPath();
           ctx.moveTo(stars[i].x, stars[i].y);
           ctx.lineTo(stars[j].x, stars[j].y);
-          ctx.strokeStyle = `rgba(110, 60, 255, ${alpha})`;
+          ctx.strokeStyle = `rgba(45, 158, 95, ${alpha})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
